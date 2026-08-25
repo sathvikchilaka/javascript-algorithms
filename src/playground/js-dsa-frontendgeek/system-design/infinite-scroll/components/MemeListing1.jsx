@@ -13,6 +13,9 @@ export const MemeListing1 = () => {
     }, [])
 
     const handleScroll = (threshold = 200) => {
+        const scrollTop = window.scrollY
+        const clientHeight = window.innerHeight
+        const scrollHeight = document.documentElement.scrollHeight
         if(scrollTop + clientHeight >= scrollHeight - threshold){
             console.log("Loading more");
             fetchData()
