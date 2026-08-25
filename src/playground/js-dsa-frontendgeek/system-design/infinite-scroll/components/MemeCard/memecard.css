@@ -1,0 +1,8 @@
+.memeCard {
+    display: flex;
+    flex-direction: "column";
+    padding: 4;
+    margin: 8;
+    gap: 10;
+    border: "1px solid #E2E2E2",
+  }
