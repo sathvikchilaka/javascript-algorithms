@@ -3,28 +3,23 @@ import './memeList.css'
 import { MemeCard } from './MemeCard/MemeCard'
 
 const PAGE_SIZE = 10
-const THRESHOLD = 200
 
-export const MemeListing1 = () => {
+export const MemeListing2 = () => {
     const [memesData, setMemesData] = useState([])
     const offsetRef = useRef(0)
     const loadingRef = useRef(false)
+    const sentinelRef = useRef(null)
 
     useEffect(()=>{
         fetchData()
 
-        window.addEventListener("scroll", handleScroll)
-        return () => window.removeEventListener("scroll", handleScroll)
-    }, [])
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) fetchData()
+        }, { rootMargin: "200px" })
 
-    const handleScroll = () => {
-        const scrollTop = window.scrollY
-        const clientHeight = window.innerHeight
-        const scrollHeight = document.documentElement.scrollHeight
-        if(scrollTop + clientHeight >= scrollHeight - THRESHOLD){
-            fetchData()
-        }
-    }
+        if (sentinelRef.current) observer.observe(sentinelRef.current)
+        return () => observer.disconnect()
+    }, [])
 
     const fetchData = async () => {
         if (loadingRef.current) return
@@ -43,6 +38,9 @@ export const MemeListing1 = () => {
     }
 
   return (
-    <div className='memesList'> { memesData?.map((meme, i)=> <MemeCard key={`${meme.ups}-${i}`} {...meme} /> ) } </div>
+    <>
+      <div className='memesList'> { memesData?.map((meme, i)=> <MemeCard key={`${meme.ups}-${i}`} {...meme} /> ) } </div>
+      <div ref={sentinelRef} />
+    </>
   )
 }
