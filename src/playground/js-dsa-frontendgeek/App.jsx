@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { routes } from './routes.js';
 
@@ -18,11 +19,13 @@ function Landing() {
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Landing />} />
-      {routes.map((r) => (
-        <Route key={r.path} path={r.path} element={<r.component />} />
-      ))}
-    </Routes>
+    <Suspense fallback={<div style={{ padding: 24 }}>Loading...</div>}>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        {routes.map((r) => (
+          <Route key={r.path} path={r.path} element={<r.component />} />
+        ))}
+      </Routes>
+    </Suspense>
   );
 }
