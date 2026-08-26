@@ -1,0 +1,202 @@
+.dt-container {
+  border: 1px solid #333;
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 14px;
+  font-family: system-ui, sans-serif;
+}
+
+.dt-header {
+  background: #1a1a1a;
+  border-bottom: 1px solid #333;
+  user-select: none;
+}
+
+.dt-header-cell {
+  padding: 8px 10px;
+  font-weight: 600;
+  color: #e5e5e5;
+  border-right: 1px solid #2a2a2a;
+  cursor: grab;
+}
+
+.dt-header-cell:active {
+  cursor: grabbing;
+}
+
+.dt-header-cell:hover {
+  background: #222;
+}
+
+.dt-resize-handle {
+  background: transparent;
+}
+
+.dt-resize-handle:hover,
+.dt-resize-handle:active {
+  background: #4a9eff;
+}
+
+.dt-cell {
+  padding: 8px 10px;
+  border-right: 1px solid #222;
+  border-bottom: 1px solid #222;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.dt-checkbox-cell {
+  width: 40px;
+  flex: none;
+  justify-content: center;
+}
+
+.dt-row:hover .dt-cell {
+  background: #161616;
+}
+
+.dt-loading,
+.dt-error,
+.dt-empty {
+  padding: 8px 10px;
+  text-align: center;
+  color: #888;
+}
+
+.dt-error {
+  color: #e5484d;
+}
+
+.dt-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: #111;
+  border-bottom: 1px solid #333;
+}
+
+.dt-title {
+  margin: 0;
+  color: #f5f5f5;
+  font-size: 16px;
+}
+
+.dt-search {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 6px 10px;
+  color: #e5e5e5;
+  font-size: 13px;
+  width: 200px;
+}
+
+.dt-search:focus {
+  outline: none;
+  border-color: #4a9eff;
+}
+
+.dt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.dt-badge--available {
+  background: #1f9d55;
+}
+
+.dt-badge--unavailable {
+  background: #c0392b;
+}
+
+.dt-actions-menu {
+  position: relative;
+}
+
+.dt-actions-trigger {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.dt-actions-trigger:hover {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.dt-actions-popover {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 10;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  min-width: 120px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+}
+
+.dt-actions-popover button {
+  background: transparent;
+  border: none;
+  color: #e5e5e5;
+  text-align: left;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.dt-actions-popover button:hover {
+  background: #2a2a2a;
+}
+
+.dt-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  padding: 8px 12px;
+  border-top: 1px solid #333;
+  color: #aaa;
+  font-size: 13px;
+}
+
+.dt-pagination select {
+  background: #1a1a1a;
+  color: #e5e5e5;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+.dt-pagination button {
+  background: transparent;
+  border: 1px solid #333;
+  color: #e5e5e5;
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+.dt-pagination button:disabled {
+  color: #555;
+  cursor: default;
+}
