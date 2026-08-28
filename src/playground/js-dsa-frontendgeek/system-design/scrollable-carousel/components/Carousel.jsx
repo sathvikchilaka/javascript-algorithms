@@ -45,7 +45,7 @@ const Carousel = ({ items, circular = false, direction = 'ltr' }) => {
               image={item.image}
               description={item.description}
               slideLabel={`Slide ${realIndex + 1} of ${items.length}`}
-              isCurrent={realIndex === index}
+              isCurrent={realIndex === domIndex}
               isClone={isClone}
             />
           )
