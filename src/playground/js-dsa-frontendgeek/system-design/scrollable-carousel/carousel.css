@@ -5,7 +5,11 @@
   gap: 8px;
   width: 100%;
   max-width: 900px;
+  min-width: 320px;
   margin: 40px auto;
+  resize: horizontal;
+  overflow: hidden;
+  padding-bottom: 12px;
 }
 
 .carousel-track {

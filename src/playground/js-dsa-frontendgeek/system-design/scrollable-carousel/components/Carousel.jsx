@@ -10,6 +10,11 @@ const Carousel = ({ items, circular = false, direction = 'ltr' }) => {
     direction,
   })
 
+  // Render the list tripled so there's always a full copy of real cards
+  // as buffer before/after the middle copy we navigate within - see
+  // useCarousel for why a single clone per side isn't enough.
+  const trackItems = circular ? [...items, ...items, ...items] : items
+
   return (
     <div className="carousel" dir={direction}>
       <button
@@ -23,8 +28,8 @@ const Carousel = ({ items, circular = false, direction = 'ltr' }) => {
       </button>
 
       <div className="carousel-track" ref={trackRef}>
-        {items.map((item, i) => (
-          <CarouselCard key={item.id ?? i} image={item.image} description={item.description} />
+        {trackItems.map((item, domIndex) => (
+          <CarouselCard key={domIndex} image={item.image} description={item.description} />
         ))}
       </div>
 
