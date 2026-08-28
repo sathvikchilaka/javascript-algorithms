@@ -1,10 +1,11 @@
 import React from 'react'
 import CarouselCard from './CarouselCard'
-import { useCarousel } from '../hooks/useCarousel'
+// import { useCarousel2 } from '../hooks/useCarousel2'
 import '../carousel.css'
+import useCarousel2 from '../hooks/useCarousel2'
 
 const Carousel = ({ items, circular = false, direction = 'ltr' }) => {
-  const { trackRef, scrollNext, scrollPrev, canScrollPrev, canScrollNext } = useCarousel({
+  const { trackRef, scrollNext, scrollPrev, canScrollPrev, canScrollNext } = useCarousel2({
     itemCount: items.length,
     circular,
     direction,

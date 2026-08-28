@@ -11,7 +11,7 @@ const items = [
 ]
 
 const app = () => {
-  return <Carousel items={items} circular direction="rtl" />
+  return <Carousel items={items} circular direction="ltr" />
 }
 
 export default app
