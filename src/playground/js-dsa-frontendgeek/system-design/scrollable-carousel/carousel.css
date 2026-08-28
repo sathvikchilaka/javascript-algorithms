@@ -1,3 +1,15 @@
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .carousel {
   position: relative;
   display: flex;
@@ -17,17 +29,21 @@
   gap: 16px;
   overflow-x: auto;
   scroll-behavior: smooth;
+  /* mandatory: always settle on a snap point when scrolling stops, so a
+     manual drag/swipe/wheel never leaves the track resting mid-card. */
   scroll-snap-type: x mandatory;
-  scrollbar-width: none;
+  scrollbar-width: none; /* hide native scrollbar (Firefox) - nav is button-driven */
   padding: 4px;
 }
 
 .carousel-track::-webkit-scrollbar {
-  display: none;
+  display: none; /* hide native scrollbar (Chrome/Safari/WebKit) */
 }
 
 .carousel-card {
   flex: 0 0 220px;
+  /* this card's start (left, in LTR) edge is a valid snap point - lines up
+     with scrollIntoView({ inline: 'start' }) in useCarousel/useCarousel2 */
   scroll-snap-align: start;
   border-radius: 10px;
   overflow: hidden;

@@ -17,7 +17,13 @@ const Carousel = ({ items, circular = false, direction = 'ltr' }) => {
   const trackItems = circular ? [...items, ...items, ...items] : items
 
   return (
-    <div className="carousel" dir={direction}>
+    <div
+      className="carousel"
+      dir={direction}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Image carousel"
+    >
       <button
         type="button"
         className="carousel-button carousel-button-prev"
@@ -29,9 +35,21 @@ const Carousel = ({ items, circular = false, direction = 'ltr' }) => {
       </button>
 
       <div className="carousel-track" ref={trackRef}>
-        {trackItems.map((item, domIndex) => (
-          <CarouselCard key={domIndex} image={item.image} description={item.description} />
-        ))}
+        {trackItems.map((item, domIndex) => {
+          const realIndex = domIndex % items.length
+          const isClone = circular && (domIndex < items.length || domIndex >= items.length * 2)
+
+          return (
+            <CarouselCard
+              key={domIndex}
+              image={item.image}
+              description={item.description}
+              slideLabel={`Slide ${realIndex + 1} of ${items.length}`}
+              isCurrent={realIndex === index}
+              isClone={isClone}
+            />
+          )
+        })}
       </div>
 
       <button

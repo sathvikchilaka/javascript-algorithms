@@ -6,6 +6,7 @@ export default function useCarousel2({
   direction = 'ltr',
 }) {
   const domIndex = useRef(circular ? itemCount : 0);
+  const isScrolling = useRef(false); // true while a moveCard()-triggered scroll is in flight
   const [realIndex, setRealIndex] = useState(0);
   const trackRef = useRef(null);
 
@@ -28,9 +29,12 @@ export default function useCarousel2({
   );
 
   useEffect(() => {
-    if (!circular || !trackRef.current) return;
+    if (!trackRef.current) return;
 
-    const recenter = () => {
+    const onScrollEnd = () => {
+      isScrolling.current = false;
+      if (!circular) return;
+
       const i = domIndex.current;
       if (i < itemCount || i >= 2 * itemCount) {
         const centerIndex = getRealIndex(domIndex.current) + itemCount;
@@ -39,16 +43,20 @@ export default function useCarousel2({
       }
     };
 
-    trackRef.current.addEventListener('scrollend', recenter);
-    return () => trackRef.current.removeEventListener('scrollend', recenter);
+    trackRef.current.addEventListener('scrollend', onScrollEnd);
+    return () =>
+      trackRef.current?.removeEventListener('scrollend', onScrollEnd);
   }, [circular, itemCount, getRealIndex, scrollTo]);
 
   const moveCard = useCallback(
     (delta) => {
+      if (isScrolling.current) return;
+
       const newIndex = circular
         ? domIndex.current + delta
         : Math.max(0, Math.min(realIndex + delta, itemCount - 1));
 
+      isScrolling.current = true;
       scrollTo(newIndex, 'smooth');
       domIndex.current = newIndex;
       setRealIndex(getRealIndex(newIndex));

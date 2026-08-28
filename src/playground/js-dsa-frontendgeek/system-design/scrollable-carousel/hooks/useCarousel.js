@@ -14,6 +14,7 @@ export function useCarousel({
 }) {
   const trackRef = useRef(null);
   const domIndex = useRef(circular ? itemCount : 0); // which of the 3*itemCount DOM cards we're on
+  const isScrolling = useRef(false); // true while a move()-triggered scroll is in flight
   const [realIndex, setRealIndex] = useState(0); // 0..itemCount-1, for disabled-button state
 
   const scrollTo = useCallback((i, behavior = 'smooth') => {
@@ -31,12 +32,16 @@ export function useCarousel({
     if (circular) scrollTo(domIndex.current, 'instant');
   }, [circular, scrollTo]);
 
-  // After each scroll settles, snap back into copy1 if we've drifted out.
+  // After each scroll settles, clear the in-flight lock and snap back into
+  // copy1 if we've drifted out.
   useEffect(() => {
     const track = trackRef.current;
-    if (!track || !circular) return;
+    if (!track) return;
 
-    const recenter = () => {
+    const onScrollEnd = () => {
+      isScrolling.current = false;
+      if (!circular) return;
+
       const i = domIndex.current;
       if (i < itemCount || i >= itemCount * 2) {
         domIndex.current = toRealIndex(i) + itemCount;
@@ -44,16 +49,19 @@ export function useCarousel({
       }
     };
 
-    track.addEventListener('scrollend', recenter);
-    return () => track.removeEventListener('scrollend', recenter);
+    track.addEventListener('scrollend', onScrollEnd);
+    return () => track.removeEventListener('scrollend', onScrollEnd);
   }, [circular, itemCount, scrollTo]);
 
   const move = useCallback(
     (delta) => {
+      if (isScrolling.current) return; // drop clicks while a scroll is animating
+
       const next = circular
         ? domIndex.current + delta
         : Math.min(Math.max(domIndex.current + delta, 0), itemCount - 1);
 
+      isScrolling.current = true;
       scrollTo(next);
       domIndex.current = next;
       setRealIndex(toRealIndex(next));
